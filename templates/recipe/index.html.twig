@@ -4,8 +4,10 @@
 
 {% block body %}
 <ul>
+    {% for recipe in recipes %}
     <li>
-        <a href="{{ url('recipe.show', { slug: 'pates-bolognaises', id: 32 }) }}">Pates Bolognaises</a>
+        <a href="{{ url('recipe.show', { slug: recipe.getSlug(), id: recipe.getId() }) }}">{{ recipe.getTitle() }}</a>
     </li>
+    {% endfor %}
 </ul>
 {% endblock %}

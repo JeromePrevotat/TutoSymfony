@@ -23,3 +23,14 @@ php bin/console debug:router
 
 concatenation operator inside var : ~
 pipe angular
+
+## ORM
+
+config : .env
+php bin/console make:entity
+Create migration
+php bin/console make:migration
+Execute migration
+php bin/console doctrine:migrations:migrate
+
+filtre nl2br : keeps newline
