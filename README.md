@@ -5,3 +5,16 @@
 composer create-project symfony/skeleton:"7.3.\*" [project-name]
 composer require webapp
 php -S localhost:8000 -t public
+
+## Controller
+
+php bin/console make:controller [controller-name]
+
+### Routing
+
+config/routes.yml
+controller{path, controllerName::method}
+Attribut #[Route(path, name)]
+
+list routes:
+php bin/console debug:router
