@@ -18,3 +18,8 @@ Attribut #[Route(path, name)]
 
 list routes:
 php bin/console debug:router
+
+## Twig
+
+concatenation operator inside var : ~
+pipe angular
