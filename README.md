@@ -48,3 +48,11 @@ app.flashes
 Restrict to DELETE mehtod workaround : <input type="hidden" name="_method" value="DELETE">
 /!\ Dont forget edit framework config with http_method_override: true /!\
 FormEvents : https://symfony.com/doc/current/form/events.html
+
+## Data Validation
+
+Forms : constraints array
+Entity : import Constraint as Assert
+UniqueEntity : array == &&
+Custom Validator : php bin/console make:validator
+validator groups
