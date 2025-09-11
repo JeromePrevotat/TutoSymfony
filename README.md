@@ -34,3 +34,11 @@ Execute migration
 php bin/console doctrine:migrations:migrate
 
 filtre nl2br : keeps newline
+
+entity manager -> persist
+flush -> update db
+em -> get reposeitory from class
+
+## Forms
+
+php bin/console make:form

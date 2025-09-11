@@ -19,7 +19,14 @@ final class RecipeController extends AbstractController
         // $recipes = $recipeRepository->findAll();
         $recipes = $recipeRepository->findWithDurationLowerThan(20);
         $recipe = new Recipe();
-        
+        $recipe->setTitle('Barbe à papa')
+            ->setSlug('barbe-a-papa')
+            ->setDuration(2)
+            ->setContent('Du sucre')
+            ->setCreatedAt(new \DateTimeImmutable())
+            ->setUpdatedAt(new \DateTimeImmutable());
+        $em->persist($recipe);
+        $em->flush();
         return $this->render('recipe/index.html.twig', [
             'recipes' => $recipes
         ]);
