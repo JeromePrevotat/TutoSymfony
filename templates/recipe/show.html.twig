@@ -6,4 +6,5 @@
     <p>
         {{ recipe.content | nl2br }}
     </p>
+    <a href="{{ url('recipe.edit', {id: recipe.id}) }}">Edit</a>
 {% endblock %}
