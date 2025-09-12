@@ -62,7 +62,6 @@ validator groups
 ## Services
 
 php bin/console debug:autowiring [name] | grep [name]
-dependancy injection : constructor with service as arg then $this->serviceName
 
 ## TP Contact
 
@@ -72,3 +71,12 @@ nom email message
 mailpit into bin
 messenger.yml queue from async to sync
 .env config
+
+## TP Category
+
+Entity name slug
+(dessert, plat, entrée)
+navigation
+tableau
+form
+Entity -> Controller -> Route -> Forms

@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin.html.twig' %}
 
 {% block title %}Recipe index{% endblock %}
 
 {% block body %}
-<a class="btn btn-success" href="{{ url('recipe.add') }}">Add</a>
+<a class="btn btn-success" href="{{ url('admin.recipe.create') }}">Add</a>
 <table class="table">
     <thead>
         <tr>
@@ -15,12 +15,12 @@
     {% for recipe in recipes %}
     <tr>
         <td>
-            <a href="{{ url('recipe.show', { slug: recipe.getSlug(), id: recipe.getId() }) }}">{{ recipe.getTitle() }}</a>
+            <a href="{{ url('admin.recipe.edit', { id: recipe.getId() }) }}">{{ recipe.getTitle() }}</a>
         </td>
         <td>
             <div class="d-flex gap-2">
-                <a class="btn btn-primary" href="{{ url('recipe.edit', { id: recipe.getId() }) }}">Edit</a>
-                <form action="{{ url('recipe.delete', { id: recipe.getId() }) }}" method="POST">
+                <a class="btn btn-primary" href="{{ url('admin.recipe.edit', { id: recipe.getId() }) }}">Edit</a>
+                <form action="{{ url('admin.recipe.delete', { id: recipe.getId() }) }}" method="POST">
                     <input type="hidden" name="_method" value="DELETE">
                     <button class="btn btn-danger" type="submit">Delete</button>
                 </form>
