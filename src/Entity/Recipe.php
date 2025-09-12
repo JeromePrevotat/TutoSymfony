@@ -7,6 +7,7 @@ use App\Validator\BanWord;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
@@ -36,7 +37,7 @@ class Recipe
 
     #[ORM\Column(length: 255)]
     #[Assert\Length(min: 3)]
-    #[Assert\Regex('/^[a-z0-9]+(?:-[a-z0-9]+)*$/')]
+    #[Assert\Regex('/' . Requirement::ASCII_SLUG . '/')]
     private string $slug = '';
 
     #[ORM\Column(nullable: true)]
