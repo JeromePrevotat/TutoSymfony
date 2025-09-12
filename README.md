@@ -47,6 +47,8 @@ form->handleRequest
 app.flashes
 Restrict to DELETE mehtod workaround : <input type="hidden" name="_method" value="DELETE">
 /!\ Dont forget edit framework config with http_method_override: true /!\
+FormsType and associated Validators : https://symfony.com/doc/current/reference/forms/types.html
+
 FormEvents : https://symfony.com/doc/current/form/events.html
 
 ## Data Validation
@@ -56,3 +58,16 @@ Entity : import Constraint as Assert
 UniqueEntity : array == &&
 Custom Validator : php bin/console make:validator
 validator groups
+
+## Services
+
+php bin/console debug:autowiring [name]
+
+## TP Contact
+
+ContactFormDTO
+/contact
+nom email message
+mailpit into bin
+messenger.yml queue from async to sync
+.env config
