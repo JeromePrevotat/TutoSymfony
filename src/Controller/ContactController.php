@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
-use App\Form\ContactFormDTOType;
+use App\DTO\ContactDTO;
+use App\Form\ContactType;
+use PhpParser\Node\Stmt\TryCatch;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,15 +14,19 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class ContactController extends AbstractController
 {
-    public function __construct(private readonly MailerInterface $mailer) {}
-
     #[Route('/contact', name: 'contact')]
-    public function contact(Request $request): Response
+    public function contact(Request $request, MailerInterface $mailer): Response
     {
-        $form = $this->createForm(ContactFormDTOType::class);
+        $data = new ContactDTO();
+        $data->name = 'John Doe';
+        $data->email = 'jd@test.test';
+        $data->recipient = '';
+        $data->message = 'Hello, this is a test message.';
+
+        $form = $this->createForm(ContactType::class, $data);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $errors = $this->SendMail($form, $this->mailer);
+            $errors = $this->SendMail($form, $mailer);
             if (count($errors) > 0) {
                 $errorMsg = '';
                 foreach ($errors as $error) {
@@ -41,24 +47,28 @@ final class ContactController extends AbstractController
     {
         $data = $form->getData();
         $errors = [];
-        if (empty($data['name']) || $data['name'] === '') {
+        if (empty($data->name) || $data->name === '') {
             $errors[] = 'Name is required';
-        } 
-        if (empty($data['email']) || $data['email'] === '') {
+        }
+        if (empty($data->email) || $data->email === '') {
             $errors[] = 'Email is required';
-        } 
-        if (empty($data['recipient']) || $data['recipient'] === '') {
+        }
+        if (empty($data->recipient) || $data->recipient === '') {
             $errors[] = 'Recipient is required';
-        } 
-        if (empty($data['message']) || $data['message'] === '') {
+        }
+        if (empty($data->message) || $data->message === '') {
             $errors[] = 'Message is required';
         }
         if (count($errors) === 0) {
             $email = (new Email())
-                ->from($data['email'])
-                ->to($data['recipient'])
-                ->text('Name: ' . $data['name'] . "\n" . 'Message: ' . $data['message']);
-            $mailer->send($email);
+                ->from($data->email)
+                ->to($data->recipient)
+                ->text('Name: ' . $data->name . "\n" . 'Message: ' . $data->message);
+            try {
+                $mailer->send($email);
+            } catch (\Exception $e) {
+                $errors[] = 'Failed to send email: ' . $e->getMessage();
+            }
         }
         return $errors;
     }
