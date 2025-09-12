@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -25,6 +26,18 @@ class ContactFormDTOType extends AbstractType
                 ],
             ])
             ->add('email', EmailType::class, [
+                'empty_data' => '',
+                'trim' => true,
+                'constraints' => [
+                    new Length(['max' => 255]),
+                ],
+            ])
+            ->add('recipient', ChoiceType::class, [
+                'choices' => [
+                    'Comptability' => 'test-comptability@test.test',
+                    'R&D' => 'test-rnd@test.test',
+                    'Human Resources' => 'test-hr@test.test',
+                ],
                 'empty_data' => '',
                 'trim' => true,
                 'constraints' => [

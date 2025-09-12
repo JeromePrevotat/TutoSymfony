@@ -61,7 +61,8 @@ validator groups
 
 ## Services
 
-php bin/console debug:autowiring [name]
+php bin/console debug:autowiring [name] | grep [name]
+dependancy injection : constructor with service as arg then $this->serviceName
 
 ## TP Contact
 

@@ -43,15 +43,20 @@ final class ContactController extends AbstractController
         $errors = [];
         if (empty($data['name']) || $data['name'] === '') {
             $errors[] = 'Name is required';
-        } elseif (empty($data['email']) || $data['email'] === '') {
+        } 
+        if (empty($data['email']) || $data['email'] === '') {
             $errors[] = 'Email is required';
-        } elseif (empty($data['message']) || $data['message'] === '') {
+        } 
+        if (empty($data['recipient']) || $data['recipient'] === '') {
+            $errors[] = 'Recipient is required';
+        } 
+        if (empty($data['message']) || $data['message'] === '') {
             $errors[] = 'Message is required';
         }
         if (count($errors) === 0) {
             $email = (new Email())
                 ->from($data['email'])
-                ->to('test-recipient@test.test')
+                ->to($data['recipient'])
                 ->text('Name: ' . $data['name'] . "\n" . 'Message: ' . $data['message']);
             $mailer->send($email);
         }
