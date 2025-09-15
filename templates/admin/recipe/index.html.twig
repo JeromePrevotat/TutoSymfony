@@ -7,6 +7,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Thumbnail</th>
             <th>Title</th>
             <th>Category</th>
             <th>Action</th>
@@ -16,7 +17,14 @@
     {% for recipe in recipes %}
     <tr>
         <td>
-            <a href="{{ url('admin.recipe.edit', { id: recipe.getId() }) }}">{{ recipe.getTitle() }}</a>
+            {% if recipe.thumbnail is empty %}
+                <p></p>
+            {% else %}
+                <img src="{{ vich_uploader_asset(recipe, 'thumbnailFile') }}" alt="{{ recipe.title }}" style="height: 50px;">
+            {% endif %}
+        </td>
+        <td>
+            <a href="{{ url('admin.recipe.edit', { id: recipe.id }) }}">{{ recipe.title }}</a>
         </td>
         <td>
             {{ recipe.category.name | default('') }}

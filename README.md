@@ -90,3 +90,12 @@ Entity -> Controller -> Route -> Forms+Validator -> Twig
 Select multiple :
 by_reference = false to save changes
 expanded = true to use radion/checkbox
+
+## Envoie de fichier
+
+config package vich.yml
+FileType
+attribut File
+vich
+
+## Security
