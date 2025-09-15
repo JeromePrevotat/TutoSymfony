@@ -114,3 +114,7 @@ vue : currentRoute, page: currentPage +/- 1
 
 KnpPaginatorBundle
 /!\ sortFieldAllowList /!\
+
+## Doctrine avancée
+
+DTO for partial data
