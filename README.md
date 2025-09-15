@@ -118,3 +118,15 @@ KnpPaginatorBundle
 ## Doctrine avancée
 
 DTO for partial data
+
+## Asset Mapper
+
+symfony serve
+Put assets in assets
+asset() in twig
+php bin/console asset-map:compile to use them in js
+
+## Créer une API + Serializer
+
+render json
+Groups to serialize

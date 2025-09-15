@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -25,11 +26,12 @@ class Category
     #[Assert\NotBlank()]
     #[Assert\Length(min: 3)]
     #[BanWord()]
+    #[Groups(['recipes.show'])]
     private string $name = '';
 
     #[ORM\Column(length: 255)]
     #[Assert\Length(min: 3)]
-    #[Assert\Regex('/'.Requirement::ASCII_SLUG.'/')]
+    #[Assert\Regex('/' . Requirement::ASCII_SLUG . '/')]
     #[BanWord()]
     private string $slug = '';
 

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -21,15 +22,18 @@ class Recipe
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['recipes.index'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\Length(min: 3)]
     #[BanWord()]
+    #[Groups(['recipes.index'])]
     private string $title = '';
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\Length(min: 3)]
+    #[Groups(['recipes.show'])]
     private string $content = '';
 
     #[ORM\Column]
@@ -41,13 +45,16 @@ class Recipe
     #[ORM\Column(length: 255)]
     #[Assert\Length(min: 3)]
     #[Assert\Regex('/' . Requirement::ASCII_SLUG . '/')]
+    #[Groups(['recipes.index'])]
     private string $slug = '';
 
     #[ORM\Column(nullable: true)]
     #[Assert\Positive()]
+    #[Groups(['recipes.index'])]
     private ?int $duration = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipes', cascade: ['persist'])]
+    #[Groups(['recipes.show'])]
     private ?Category $category = null;
 
     #[ORM\Column(length: 255, nullable: true)]
