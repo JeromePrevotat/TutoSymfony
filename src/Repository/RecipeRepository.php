@@ -24,6 +24,7 @@ class RecipeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('r')
             ->where('r.duration <= :duration')
+            ->leftJoin('r.category', 'c')
             ->orderBy('r.duration', 'ASC')
             ->setParameter('duration', $duration)
             ->getQuery()

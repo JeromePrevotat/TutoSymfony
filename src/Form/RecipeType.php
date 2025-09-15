@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Recipe;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Event\PostSubmitEvent;
 use Symfony\Component\Form\Event\PreSubmitEvent;
@@ -15,13 +17,12 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class RecipeType extends AbstractType
 {
+    public function __construct(private FormListenerFactory $formListenerFactory) {}
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('title', TextType::class, [
-                'empty_data' => '',
-            ])
-            ->add('content', TextType::class, [
                 'empty_data' => '',
             ])
             ->add('slug', TextType::class, [
@@ -31,10 +32,17 @@ class RecipeType extends AbstractType
                 //     new Regex('/^[a-z0-9]+(?:-[a-z0-9]+)*$/')
                 // ])
             ])
+            ->add('Category', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'name',
+            ])
+            ->add('content', TextType::class, [
+                'empty_data' => '',
+            ])
             ->add('duration')
             ->add('save', SubmitType::class)
-            ->addEventListener(FormEvents::PRE_SUBMIT, $this->autoSlug(...))
-            ->addEventListener(FormEvents::POST_SUBMIT, $this->attachTimeStamps(...))
+            ->addEventListener(FormEvents::PRE_SUBMIT, $this->formListenerFactory->autoslug('title'))
+            ->addEventListener(FormEvents::POST_SUBMIT, $this->formListenerFactory->attachTimestamps())
         ;
     }
 
@@ -43,27 +51,5 @@ class RecipeType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Recipe::class,
         ]);
-    }
-
-    public function autoSlug(PreSubmitEvent $event): void
-    {
-        $data = $event->getData();
-        if (empty($data['slug'])) {
-            $slugger = new AsciiSlugger();
-            $data['slug'] = strtolower($slugger->slug($data['title']));
-            $event->setData($data);
-        }
-    }
-
-    public function attachTimeStamps(PostSubmitEvent $event): void
-    {
-        $data = $event->getData();
-        if (!($data instanceof Recipe)) {
-            return;
-        }
-        if (!$data->getId()) {
-            $data->setCreatedAt(new \DateTimeImmutable());
-        }
-        $data->setUpdatedAt(new \DateTimeImmutable());
     }
 }

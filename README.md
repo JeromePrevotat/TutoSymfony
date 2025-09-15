@@ -79,4 +79,14 @@ Entity name slug
 navigation
 tableau
 form
-Entity -> Controller -> Route -> Forms
+Entity -> Controller -> Route -> Forms+Validator -> Twig
+/!\ Dont forget to set Controller's correct namespace /!\
+/!\ Clear Cache & composer dump-autload after moving files /!\
+/!\ Dont forget to make migrations... /!\
+
+## ManyToONe
+
+/!\ Case sensitive when choosing Entity related to /!\
+Select multiple :
+by_reference = false to save changes
+expanded = true to use radion/checkbox
