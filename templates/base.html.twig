@@ -16,12 +16,18 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('home') }}">Accueil</a>
-                <a class="navbar-brand" href="{{ url('admin') }}">Administration</a>
+                {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
+                    <a class="navbar-brand" href="{{ url('admin') }}">Administration</a>
+                {% endif %}
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        {# <a class="nav-link" {{ app.current_route == 'admin.recipe.' ? 'admin.recipe.' : '' }} href="{{ url('admin.recipe.index') }}">Administration</a> #}
+                        {% if app.user %}
+                            <a class="nav-link" href="{{ url('app_logout') }}">Logout ({{ app.user.username }})</a>
+                        {% else %}
+                            <a class="nav-link" href="{{ url('app_login') }}">Login</a>
+                        {% endif %}
                     </li>
                 </ul>
             </div>

@@ -99,3 +99,8 @@ attribut File
 vich
 
 ## Security
+
+php bin/console make:user
+php bin/console make:auth
+getUser from Service : Security->getUser()
+Security->getToken()
