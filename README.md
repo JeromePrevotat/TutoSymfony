@@ -104,3 +104,13 @@ php bin/console make:user
 php bin/console make:auth
 getUser from Service : Security->getUser()
 Security->getToken()
+
+## Paginer les données
+
+Repository function returns Paginator object
+qb -> query
+set default page query param
+vue : currentRoute, page: currentPage +/- 1
+
+KnpPaginatorBundle
+/!\ sortFieldAllowList /!\
