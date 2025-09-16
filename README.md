@@ -142,3 +142,4 @@ context : groups or AbstractNormilizer::OBJECT_TO_POPULATE to fill an existing o
 OR
 MapQueryString to validate queryParams
 MapRequestPayload to assign body content to an object
+Controller -> Authenticator -> Provider -> Firewall
