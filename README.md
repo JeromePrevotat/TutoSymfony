@@ -130,3 +130,15 @@ php bin/console asset-map:compile to use them in js
 
 render json
 Groups to serialize
+context[] = groups
+other format :
+import SerializerInterface
+serilizer->serialize(objects, format, context)
+
+## Deserialization et MapRequestPayload
+import Serializer
+deserialize(requestContent, type/class, format, context)
+context : groups or AbstractNormilizer::OBJECT_TO_POPULATE to fill an existing object
+OR
+MapQueryString to validate queryParams
+MapRequestPayload to assign body content to an object

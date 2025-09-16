@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -28,12 +29,12 @@ class Recipe
     #[ORM\Column(length: 255)]
     #[Assert\Length(min: 3)]
     #[BanWord()]
-    #[Groups(['recipes.index'])]
+    #[Groups(['recipes.index', 'recipes.create'])]
     private string $title = '';
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\Length(min: 3)]
-    #[Groups(['recipes.show'])]
+    #[Groups(['recipes.show', 'recipes.create'])]
     private string $content = '';
 
     #[ORM\Column]
@@ -50,7 +51,7 @@ class Recipe
 
     #[ORM\Column(nullable: true)]
     #[Assert\Positive()]
-    #[Groups(['recipes.index'])]
+    #[Groups(['recipes.index', 'recipes.create'])]
     private ?int $duration = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipes', cascade: ['persist'])]
@@ -77,6 +78,10 @@ class Recipe
     public function setTitle(string $title): static
     {
         $this->title = $title;
+        if (empty($this->slug)) {
+            $slugger = new AsciiSlugger();
+            $this->slug = strtolower($slugger->slug($title));
+        }
 
         return $this;
     }
