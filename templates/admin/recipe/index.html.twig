@@ -11,6 +11,7 @@
             <th>Thumbnail</th>
             <th>{{ knp_pagination_sortable(recipes, 'Title', 'r.title') }}</th>
             <th>Category</th>
+            <th>Author</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -30,6 +31,9 @@
         </td>
         <td>
             {{ recipe.category.name | default('') }}
+        </td>
+        <td>
+            {{ recipe.user.username | default('') }}
         </td>
         <td>
             <div class="d-flex gap-2">

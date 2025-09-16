@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -59,6 +60,10 @@ class Category
     public function setName(string $name): static
     {
         $this->name = $name;
+        if (empty($this->slug)) {
+            $slugger = new AsciiSlugger();
+            $this->slug = strtolower($slugger->slug($name));
+        }
 
         return $this;
     }

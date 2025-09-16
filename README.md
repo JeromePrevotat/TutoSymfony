@@ -136,6 +136,7 @@ import SerializerInterface
 serilizer->serialize(objects, format, context)
 
 ## Deserialization et MapRequestPayload
+
 import Serializer
 deserialize(requestContent, type/class, format, context)
 context : groups or AbstractNormilizer::OBJECT_TO_POPULATE to fill an existing object
@@ -143,3 +144,11 @@ OR
 MapQueryString to validate queryParams
 MapRequestPayload to assign body content to an object
 Controller -> Authenticator -> Provider -> Firewall
+
+## Fixtures
+
+composer require --dev orm-fixtures
+php bin/console make:fixtures
+php bin/console doctrine:fixtures:load
+fake data : faker
+DependentFixtureInterface to manage Fixture dependencies/run order
